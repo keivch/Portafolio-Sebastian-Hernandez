@@ -1,161 +1,141 @@
-import { useState, useEffect } from "react";
-import { FaCode, FaRocket, FaHeart} from "react-icons/fa";
-import perfil from '../assets/perfil.jpg';
+import { useEffect, useState } from "react";
+import { FaCode, FaEnvelope, FaHeart, FaLinkedin, FaRocket } from "react-icons/fa";
+import perfil from "../assets/perfil.jpg";
 
-export default function Header(){
-    const [currentRole, setCurrentRole] = useState(0);
-    const [isVisible, setIsVisible] = useState(false);
-    
-    
-    const roles = [
-        "Desarrollador Full Stack",
-        "Desarrollador Backend",
-        "Desarrollador Frontend",
-        "Desarrollador web"
-    ];
+const roles = [
+  "Desarrollador Full Stack",
+  "Desarrollador Backend",
+  "Desarrollador Frontend",
+  "Desarrollador web",
+];
 
-    const skills = [
-        { icon: <FaCode />, text: "Desarrollo Full Stack" },
-        { icon: <FaRocket />, text: "Soluciones Escalables" },
-        { icon: <FaHeart />, text: "Código Limpio" }
-    ];
+const highlights = [
+  { icon: <FaCode />, text: "Desarrollo full stack" },
+  { icon: <FaRocket />, text: "Soluciones escalables" },
+  { icon: <FaHeart />, text: "Código claro y mantenible" },
+];
 
-    // Animación de roles rotativos
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentRole((prev) => (prev + 1) % roles.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, []);
+const snapshot = [
+  { value: "5", label: "Proyectos reales" },
+  { value: "Full stack", label: "Web, APIs y datos" },
+  { value: "2025", label: "Graduación Univalle" },
+  { value: "Palmira", label: "Valle del Cauca" },
+];
 
-    // Animación de aparición
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
+export default function Header() {
+  const [currentRole, setCurrentRole] = useState(0);
 
-    return(
-        <header className='bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white py-20 px-4 min-h-screen flex items-center relative overflow-hidden'>
-            {/* Elementos decorativos de fondo */}
-            <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl"></div>
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentRole((prev) => (prev + 1) % roles.length);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section id="inicio" className="scroll-mt-24 relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-sky-200/70 blur-3xl" />
+        <div className="absolute top-32 -left-16 h-72 w-72 rounded-full bg-blue-200/50 blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto max-w-6xl px-5 pb-8 pt-14 lg:pt-20">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-sm font-medium text-emerald-700">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              Disponible para oportunidades
             </div>
 
-            <div className="max-w-6xl mx-auto w-full relative z-10">
-                <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-                    {/* Columna izquierda - Información */}
-                    <div className={`flex-1 text-center lg:text-left transition-all duration-1000 ${
-                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                    }`}>
-                        {/* Saludo */}
-                        <div className="mb-6">
-                            <span className="inline-block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-medium text-lg mb-2">
-                                👋 Hola, soy
-                            </span>
-                        </div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">
+              Desarrollador de software
+            </p>
+            <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+              Sebastian Hernandez
+              <span className="block text-blue-600">Scarpetta</span>
+            </h1>
 
-                        {/* Nombre */}
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
-                            <span className="bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-                                Sebastian Hernandez
-                            </span>
-                            <br />
-                            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                                Scarpetta
-                            </span>
-                        </h1>
+            <p className="mt-5">
+              <span
+                key={currentRole}
+                className="role-in inline-flex rounded-full bg-slate-900 px-4 py-1.5 text-sm font-semibold text-white"
+              >
+                {roles[currentRole]}
+              </span>
+            </p>
 
-                        {/* Rol rotativo */}
-                        <div className="mb-6 h-12 flex items-center justify-center lg:justify-start">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3 border border-white/20">
-                                <span className="text-slate-300 text-lg font-medium transition-all duration-500">
-                                    {roles[currentRole]}
-                                </span>
-                            </div>
-                        </div>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              Construyo productos web de punta a punta: interfaces claras, APIs y bases de datos
+              pensadas para proyectos reales. Me enfoco en soluciones eficientes, escalables y de
+              alta calidad, con tecnologías modernas y buenas prácticas.
+            </p>
 
-                        {/* Descripción */}
-                        <p className='text-slate-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0'>
-                            Mi enfoque se centra en desarrollar <span className="text-blue-400 font-medium">soluciones eficientes</span>, 
-                            <span className="text-purple-400 font-medium"> escalables</span> y de 
-                            <span className="text-green-400 font-medium"> alta calidad</span>, utilizando 
-                            tecnologías modernas y las mejores prácticas de la industria.
-                        </p>
-
-                        {/* Skills destacadas */}
-                        <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
-                            {skills.map((skill, index) => (
-                                <div 
-                                    key={index}
-                                    className="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105"
-                                >
-                                    <span className="text-blue-400">{skill.icon}</span>
-                                    <span className="text-slate-300 text-sm font-medium">{skill.text}</span>
-                                </div>
-                            ))}
-                        </div>
-
-                    </div>
-
-                    {/* Columna derecha - Imagen */}
-                    <div className={`flex-shrink-0 transition-all duration-1000 delay-300 ${
-                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                    }`}>
-                        <div className="relative">
-                            {/* Imagen principal */}
-                            <div className="relative group">
-                                <img
-                                    src={perfil}
-                                    alt='Sebastian Hernandez Scarpetta - Desarrollador Full Stack'
-                                    className='w-64 h-64 lg:w-80 lg:h-80 rounded-full object-cover border-4 border-white/20 shadow-2xl transition-all duration-300 group-hover:scale-105'
-                                />
-                                
-                                {/* Anillo de gradiente animado */}
-                                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 p-1 animate-spin-slow opacity-75">
-                                    <div className="w-full h-full rounded-full bg-slate-800"></div>
-                                </div>
-                                
-                                {/* Efectos de partículas */}
-                                <div className="absolute -inset-4 opacity-30">
-                                    <div className="absolute top-0 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
-                                    <div className="absolute top-1/4 right-0 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
-                                    <div className="absolute bottom-1/4 left-0 w-1.5 h-1.5 bg-green-400 rounded-full animate-ping" style={{animationDelay: '2s'}}></div>
-                                    <div className="absolute bottom-0 right-1/4 w-1 h-1 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
-                                </div>
-                            </div>
-
-                            {/* Estado de disponibilidad */}
-                            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500/20 border border-green-400/30 rounded-full px-4 py-2 backdrop-blur-sm">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                                    <span className="text-green-300 font-medium text-sm">
-                                        Disponible para proyectos
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Scroll indicator */}
-                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-                    <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-                        <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
-                    </div>
-                </div>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a
+                href="#proyectos"
+                className="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+              >
+                Ver proyectos
+              </a>
+              <a
+                href="mailto:sebastianscarpetta19@gmail.com"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-blue-200 hover:text-blue-700"
+              >
+                <FaEnvelope className="text-blue-600" />
+                Escribirme
+              </a>
+              <a
+                href="https://www.linkedin.com/in/sebastian-scarpetta-developer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-blue-200 hover:text-blue-700"
+              >
+                <FaLinkedin className="text-blue-600" />
+                LinkedIn
+              </a>
             </div>
 
-            {/* CSS personalizado para animaciones */}
-            <style jsx>{`
-                @keyframes spin-slow {
-                    from { transform: rotate(0deg); }
-                    to { transform: rotate(360deg); }
-                }
-                .animate-spin-slow {
-                    animation: spin-slow 8s linear infinite;
-                }
-            `}</style>
-        </header>
-    )
+            <ul className="mt-8 flex flex-wrap gap-2.5">
+              {highlights.map((item) => (
+                <li
+                  key={item.text}
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-sm font-medium text-slate-700"
+                >
+                  <span className="text-blue-600">{item.icon}</span>
+                  {item.text}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-sm">
+              <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-blue-200 via-white to-sky-100" />
+              <img
+                src={perfil}
+                alt="Sebastian Hernandez Scarpetta, desarrollador de software"
+                className="relative h-[26rem] w-full rounded-[1.7rem] border-4 border-white object-cover object-top shadow-xl"
+              />
+              <div className="absolute -bottom-5 left-5 right-5 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lg">
+                <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500 animate-pulse" />
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">Abierto a nuevos proyectos</p>
+                  <p className="text-xs text-slate-500">Palmira, Valle del Cauca · Colombia</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <dl className="mt-16 grid grid-cols-2 overflow-hidden rounded-3xl border border-slate-200 bg-slate-200 shadow-sm md:grid-cols-4">
+          {snapshot.map((item) => (
+            <div key={item.label} className="bg-white px-5 py-6">
+              <dt className="text-2xl font-extrabold tracking-tight text-slate-900">{item.value}</dt>
+              <dd className="mt-1 text-sm text-slate-500">{item.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
 }

@@ -1,73 +1,65 @@
-import { FaUsers, FaLightbulb, FaComments, FaHandshake } from "react-icons/fa";
-import { MdGroups, MdPsychologyAlt } from "react-icons/md";
+import { FaComments, FaHandshake, FaLightbulb, FaUsers } from "react-icons/fa";
 import { GiTeamIdea } from "react-icons/gi";
+import { MdGroups, MdPsychologyAlt } from "react-icons/md";
+
+const grupos = [
+  {
+    categoria: "Metodologías y equipo",
+    detalle: "Cómo organizo el trabajo cuando el proyecto es compartido.",
+    habilidades: [
+      { nombre: "Scrum", icono: <MdGroups /> },
+      { nombre: "Trabajo colaborativo", icono: <GiTeamIdea /> },
+      { nombre: "Resolución de conflictos", icono: <MdPsychologyAlt /> },
+    ],
+  },
+  {
+    categoria: "Habilidades blandas",
+    detalle: "Lo que sostengo en el día a día con clientes y compañeros.",
+    habilidades: [
+      { nombre: "Comunicación efectiva", icono: <FaComments /> },
+      { nombre: "Proactividad", icono: <FaLightbulb /> },
+      { nombre: "Responsabilidad", icono: <FaUsers /> },
+      { nombre: "Adaptabilidad", icono: <FaHandshake /> },
+    ],
+  },
+];
 
 export default function Skills() {
-  const skills = [
-    {
-      categoria: "Metodologías / Trabajo en Equipo",
-      habilidades: [
-        { nombre: "Scrum", icono: <MdGroups /> },
-        { nombre: "Trabajo colaborativo", icono: <GiTeamIdea /> },
-        { nombre: "Resolución de conflictos", icono: <MdPsychologyAlt /> },
-      ],
-    },
-    {
-      categoria: "Habilidades Blandas",
-      habilidades: [
-        { nombre: "Comunicación efectiva", icono: <FaComments /> },
-        { nombre: "Proactividad", icono: <FaLightbulb /> },
-        { nombre: "Responsabilidad", icono: <FaUsers /> },
-        { nombre: "Adaptabilidad", icono: <FaHandshake /> },
-      ],
-    },
-  ];
-
   return (
-    <section className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white py-20 px-4 min-h-screen flex items-center">
-      <div className="max-w-6xl mx-auto w-full">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-            Otras Habilidades
+    <section id="habilidades" className="scroll-mt-24 px-5 py-20">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-10 max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">Forma de trabajo</p>
+          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            Cómo colaboro en un equipo
           </h2>
-          <p className="text-slate-300 text-lg max-w-xl mx-auto">
-            Conjunto de habilidades interpersonales y metodológicas que aplico en entornos colaborativos.
+          <p className="mt-3 text-base leading-relaxed text-slate-600">
+            Además del código, aplico prácticas de equipo y habilidades que hacen que un proyecto avance.
           </p>
         </div>
 
-        <div className="grid gap-10 md:grid-cols-2">
-          {skills.map(({ categoria, habilidades }, idx) => (
-            <div
-              key={categoria}
-              className="group relative bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-white/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
-              style={{ transitionDelay: `${idx * 100}ms` }}
-            >
-              <h3 className="text-xl font-semibold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                {categoria}
-              </h3>
-              <ul className="space-y-4">
-                {habilidades.map(({ nombre, icono }, iconIdx) => (
-                  <li key={nombre} className="flex items-center gap-4 text-base sm:text-lg text-slate-300 group-hover:text-white transition-colors duration-300">
-                    <div className="text-2xl p-2 rounded-full bg-white/10 text-white/80 group-hover:scale-110 transition-transform duration-300">
-                      {icono}
-                    </div>
-                    <span>{nombre}</span>
+        <div className="grid gap-5 md:grid-cols-2">
+          {grupos.map((grupo) => (
+            <article key={grupo.categoria} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+              <h3 className="text-xl font-bold text-slate-900">{grupo.categoria}</h3>
+              <p className="mt-2 text-sm text-slate-500">{grupo.detalle}</p>
+              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                {grupo.habilidades.map((habilidad) => (
+                  <li
+                    key={habilidad.nombre}
+                    className="flex items-center gap-3 rounded-2xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700"
+                  >
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white text-lg text-blue-600 shadow-sm">
+                      {habilidad.icono}
+                    </span>
+                    {habilidad.nombre}
                   </li>
                 ))}
               </ul>
-
-              {/* Partículas decorativas */}
-              <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
-                <div className="absolute w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-ping" style={{ top: "15%", left: "85%" }} />
-                <div className="absolute w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-ping" style={{ top: "70%", left: "20%" }} />
-                <div className="absolute w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-ping" style={{ top: "30%", left: "50%" }} />
-              </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
     </section>
   );
 }
-
-
