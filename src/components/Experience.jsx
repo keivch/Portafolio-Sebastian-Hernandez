@@ -1,236 +1,172 @@
-import { useState } from "react";
-import { FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaEye, FaTimes } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaExternalLinkAlt, FaTimes } from "react-icons/fa";
 import nicelook from "../assets/niceloook.png";
 import bomberos from "../assets/bomberos.png";
 import afh from "../assets/afh2.png";
-import landing from "../assets/afhlanding.png"
-import diepal from "../assets/diepal.png"
-
-// Simulando las imágenes con placeholders coloridos
+import landing from "../assets/afhlanding.png";
+import diepal from "../assets/diepal.png";
 
 const proyectos = [
   {
     titulo: "AFH - Landing page",
     imagen: landing,
+    rol: "Frontend",
     descripcion:
-      "Diseño y desarrollo de la pagina corporativa para la empresa afh metalmecanicos.",
-    link: 'https://www.afhmetalmecanico.com/',
-    tecnologias: ['Next js']
+      "Diseño y desarrollo de la página corporativa para la empresa AFH Metalmecánicos.",
+    link: "https://www.afhmetalmecanico.com/",
+    tecnologias: ["Next.js"],
   },
   {
     titulo: "Nicelook",
     imagen: nicelook,
+    rol: "Backend",
     descripcion:
-      "Desarrollo del backend de una aplicación web completa para la gestión integral de la peluquería Stylos (Palmira). Utilizando Python, Django y PostgreSQL, construí una API RESTful robusta para gestionar el calendario de citas, el inventario de productos, la nómina de empleados y los reportes financieros.",
-    link: 'https://github.com/juanpalacios20/backend_nicelook.git',
-    tecnologias: ['Python', 'Django', 'PostgreSQL', 'API REST']
+      "Backend de una aplicación web para la gestión integral de la peluquería Stylos (Palmira). Con Python, Django y PostgreSQL construí una API REST para el calendario de citas, inventario, nómina y reportes financieros.",
+    link: "https://github.com/juanpalacios20/backend_nicelook.git",
+    tecnologias: ["Python", "Django", "PostgreSQL", "API REST"],
   },
   {
-    titulo: "Afh-metalmecanico",
+    titulo: "AFH Metalmecánico",
     imagen: afh,
+    rol: "Backend",
     descripcion:
-      "Diseño de base de datos y desarrollo de API RESTful para la gestión de inventario de herramientas y solicitudes de retiro, incluyendo generación de archivos PDF. Implementación de módulos para creación de cotizaciones, finanzas y reportes financieros.",
-    link: 'https://github.com/keivch/Back_Afh.git',
-    tecnologias: ['API REST', 'Base de datos', 'PDF', 'Gestión de inventario']
+      "Diseño de base de datos y API REST para inventario de herramientas y solicitudes de retiro, con generación de PDF. Incluye módulos de cotizaciones, finanzas y reportes.",
+    link: "https://github.com/keivch/Back_Afh.git",
+    tecnologias: ["API REST", "Base de datos", "PDF", "Inventario"],
   },
   {
     titulo: "Sistema para bomberos",
     imagen: bomberos,
+    rol: "Full stack",
     descripcion:
-      "Participé en el desarrollo de una aplicación para los bomberos de mi ciudad. El sistema registra horas trabajadas por bombero mediante QR o huella digital (se usó Spring Boot como microservicio para el sistema de huella digital).",
-    link: 'https://github.com/Skx18/bomberos_flask.git',
-    tecnologias: ['Spring Boot', 'Flask', 'QR', 'Biometría']
+      "Aplicación para los bomberos de la ciudad. Registra horas trabajadas mediante QR o huella digital, con Spring Boot como microservicio del sistema biométrico.",
+    link: "https://github.com/Skx18/bomberos_flask.git",
+    tecnologias: ["Spring Boot", "Flask", "QR", "Biometría"],
   },
   {
-    titulo: "Pagina web Diepal",
+    titulo: "Página web Diepal",
     imagen: diepal,
+    rol: "Mantenimiento web",
     descripcion:
-      "Realicé el mantenimiento, actualización y optimización del sitio web institucional de DIEPAL. Me encargué de organizar y actualizar contenidos, implementar ajustes personalizados en WordPress, Elementor y CSS, y mejorar el rendimiento, la accesibilidad y el SEO del sitio para garantizar una experiencia rápida, clara y responsive para los usuarios.",
-    link: 'https://diepal.palmira.unal.edu.co/',
-    tecnologias: ['Wordpress']
+      "Mantenimiento, actualización y optimización del sitio institucional de DIEPAL. Organicé contenidos, ajusté WordPress, Elementor y CSS, y mejoré rendimiento, accesibilidad y SEO.",
+    link: "https://diepal.palmira.unal.edu.co/",
+    tecnologias: ["WordPress", "Elementor", "CSS", "SEO"],
   },
-
 ];
 
+function esRepositorio(link) {
+  return link.includes("github.com");
+}
+
 export default function Experience() {
-  const [actual, setActual] = useState(0);
-  const [showModal, setShowModal] = useState(false);
   const [modalImage, setModalImage] = useState(null);
 
-  const siguiente = () => setActual((prev) => (prev + 1) % proyectos.length);
-  const anterior = () =>
-    setActual((prev) => (prev - 1 + proyectos.length) % proyectos.length);
-
-  const abrirModal = (imagen) => {
-    setModalImage(imagen);
-    setShowModal(true);
-  };
-
-  const cerrarModal = () => {
-    setShowModal(false);
-    setModalImage(null);
-  };
+  useEffect(() => {
+    if (!modalImage) return undefined;
+    const onKey = (event) => {
+      if (event.key === "Escape") setModalImage(null);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [modalImage]);
 
   return (
-    <section className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white py-16 px-4 min-h-screen flex items-center">
-      <div className="max-w-7xl mx-auto w-full">
-        {/* Header mejorado */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Experiencia y Proyectos
+    <section id="proyectos" className="scroll-mt-24 px-5 py-20">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-10 max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">Proyectos</p>
+          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            Trabajo que puedo mostrar
           </h2>
-          <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-            Explora algunos de mis proyectos más destacados y las tecnologías que he utilizado
+          <p className="mt-3 text-base leading-relaxed text-slate-600">
+            Sitios, APIs y sistemas en los que participé: desde páginas corporativas hasta
+            gestión de inventario, citas y registro de personal.
           </p>
         </div>
 
-        {/* Carrusel principal */}
-        <div className="relative">
-          {/* Navegación móvil en la parte superior */}
-          <div className="flex justify-between items-center mb-8 md:hidden">
-            <button
-              onClick={anterior}
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 hover:scale-110"
-            >
-              <FaChevronLeft className="text-xl" />
-            </button>
-
-            <div className="flex space-x-2">
-              {proyectos.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActual(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === actual ? 'bg-blue-400 scale-125' : 'bg-white/30'
+        <div className="grid gap-6 lg:grid-cols-2">
+          {proyectos.map((proyecto, index) => {
+            const destacado = index === 0;
+            return (
+              <article
+                key={proyecto.titulo}
+                className={`overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${
+                  destacado ? "lg:col-span-2" : ""
+                }`}
+              >
+                <div className={destacado ? "lg:grid lg:grid-cols-5" : ""}>
+                  <button
+                    type="button"
+                    onClick={() => setModalImage(proyecto.imagen)}
+                    className={`group relative block h-full w-full bg-slate-100 text-left ${
+                      destacado ? "lg:col-span-3 lg:min-h-[22rem]" : ""
                     }`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={siguiente}
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 hover:scale-110"
-            >
-              <FaChevronRight className="text-xl" />
-            </button>
-          </div>
-
-          {/* Contenedor principal del carrusel */}
-          <div className="flex items-center justify-center gap-4 md:gap-8">
-            {/* Botón anterior (desktop) */}
-            <button
-              onClick={anterior}
-              className="hidden md:flex bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-4 transition-all duration-300 hover:scale-110"
-            >
-              <FaChevronLeft className="text-2xl" />
-            </button>
-
-            {/* Tarjeta del proyecto */}
-            <div className="w-full max-w-5xl">
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl border border-white/20">
-                <div className="flex flex-col lg:flex-row">
-                  {/* Imagen */}
-                  <div className="lg:w-1/2 relative group">
+                    aria-label={`Ampliar imagen de ${proyecto.titulo}`}
+                  >
                     <img
-                      src={proyectos[actual].imagen}
-                      alt={proyectos[actual].titulo}
-                      className="w-full h-64 lg:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
+                      src={proyecto.imagen}
+                      alt={proyecto.titulo}
+                      className={`w-full object-cover object-top transition duration-500 group-hover:scale-[1.03] ${
+                        destacado ? "h-64 sm:h-80 lg:h-full lg:min-h-[22rem]" : "h-52"
+                      }`}
                     />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <button
-                        onClick={() => abrirModal(proyectos[actual].imagen)}
-                        className="bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-4 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-                      >
-                        <FaEye className="text-xl" />
-                      </button>
-                    </div>
-                  </div>
+                    <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
+                      {proyecto.rol}
+                    </span>
+                  </button>
 
-                  {/* Contenido */}
-                  <div className="lg:w-1/2 p-8 lg:p-10">
-                    <h3 className="text-2xl lg:text-3xl font-bold mb-4 text-white">
-                      {proyectos[actual].titulo}
-                    </h3>
-
-                    <p className="text-slate-300 text-base lg:text-lg leading-relaxed mb-6">
-                      {proyectos[actual].descripcion}
+                  <div className={`flex flex-col p-6 sm:p-8 ${destacado ? "lg:col-span-2" : ""}`}>
+                    <h3 className="text-xl font-bold text-slate-900">{proyecto.titulo}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
+                      {proyecto.descripcion}
                     </p>
-
-                    {/* Tecnologías */}
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-3">
-                        Tecnologías utilizadas
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {proyectos[actual].tecnologias.map((tech, index) => (
-                          <span
-                            key={index}
-                            className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 rounded-full px-3 py-1 text-sm text-blue-200"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Link del proyecto */}
-                    <div className="space-y-3">
-                      <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">
-                        Repositorio
-                      </h4>
-                      <a
-                        href={proyectos[actual].link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                      >
-                        <FaExternalLinkAlt className="text-sm" />
-                        Link
-                      </a>
-                    </div>
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {proyecto.tecnologias.map((tech) => (
+                        <li
+                          key={tech}
+                          className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
+                        >
+                          {tech}
+                        </li>
+                      ))}
+                    </ul>
+                    <a
+                      href={proyecto.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
+                    >
+                      <FaExternalLinkAlt className="text-xs" />
+                      {esRepositorio(proyecto.link) ? "Ver repositorio" : "Ver sitio"}
+                    </a>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Botón siguiente (desktop) */}
-            <button
-              onClick={siguiente}
-              className="hidden md:flex bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-4 transition-all duration-300 hover:scale-110"
-            >
-              <FaChevronRight className="text-2xl" />
-            </button>
-          </div>
-
-          {/* Indicadores (desktop) */}
-          <div className="hidden md:flex justify-center mt-8 space-x-3">
-            {proyectos.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setActual(index)}
-                className={`w-4 h-4 rounded-full transition-all duration-300 ${index === actual
-                  ? 'bg-gradient-to-r from-blue-400 to-purple-400 scale-125'
-                  : 'bg-white/30 hover:bg-white/50'
-                  }`}
-              />
-            ))}
-          </div>
+              </article>
+            );
+          })}
         </div>
       </div>
 
-      {showModal && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="relative max-w-6xl max-h-full">
+      {modalImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/70 p-4"
+          onClick={() => setModalImage(null)}
+          role="presentation"
+        >
+          <div className="relative max-h-full max-w-6xl" onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Imagen del proyecto">
             <button
-              onClick={cerrarModal}
-              className="absolute -top-4 -right-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 hover:scale-110 z-10"
+              type="button"
+              onClick={() => setModalImage(null)}
+              className="absolute -top-3 -right-3 grid h-10 w-10 place-items-center rounded-full bg-white text-slate-700 shadow-lg"
+              aria-label="Cerrar imagen"
             >
-              <FaTimes className="text-xl text-white" />
+              <FaTimes />
             </button>
-            <img
-              src={modalImage}
-              alt="Imagen ampliada"
-              className="max-w-full max-h-full rounded-xl shadow-2xl"
-            />
+            <img src={modalImage} alt="Vista ampliada del proyecto" className="max-h-[85vh] w-full rounded-2xl object-contain bg-white" />
           </div>
         </div>
       )}
